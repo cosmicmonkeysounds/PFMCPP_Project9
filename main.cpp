@@ -98,7 +98,7 @@ void variadicHelper( T&& firstArg, Args&& ... otherArgs )
     Wrapper newWrap( std::forward<T>(firstArg) );
     newWrap.print();
     variadicHelper( std::forward<Args>(otherArgs) ... );
-}
+} 
 
 int main()
 {
