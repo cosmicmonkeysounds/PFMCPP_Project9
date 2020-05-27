@@ -51,11 +51,54 @@ private:
 template<typename Type>
 struct Wrapper
 {
+
+    Type val;
+
     Wrapper(Type&& t) : val(std::move(t)) 
     { 
         std::cout << "Wrapper(" << typeid(val).name() << ")" << std::endl; 
     }
+
+    void print()
+    {
+        std::cout << "Printing wrapped value: " << val << "\n";
+    }
+
 };
+
+template<>
+struct Wrapper<Point>
+{
+
+    Point val;
+
+    Wrapper(Point&& t) : val(std::move(t)) 
+    { 
+        std::cout << "Wrapper(" << typeid(val).name() << ")" << std::endl; 
+    }
+
+    void print()
+    {
+        std::cout << "Printing wrapped value: " << val.toString() << "\n";
+    }
+
+};
+
+template<typename T>
+void variadicHelper( T&& firstArg )
+{
+    Wrapper newWrap( std::forward<T>(firstArg) );
+    newWrap.print();
+    std::cout << "T-t-t-that's all, folks!\n";
+}
+
+template<typename T, typename ... Args>
+void variadicHelper( T&& firstArg, Args&& ... otherArgs )
+{
+    Wrapper newWrap( std::forward<T>(firstArg) );
+    newWrap.print();
+    variadicHelper( std::forward<Args>(otherArgs) ... );
+}
 
 int main()
 {
