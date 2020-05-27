@@ -66,6 +66,7 @@ struct Wrapper
 
 };
 
+
 template<>
 struct Wrapper<Point>
 {
@@ -99,6 +100,7 @@ void variadicHelper( T&& firstArg, Args&& ... otherArgs )
     newWrap.print();
     variadicHelper( std::forward<Args>(otherArgs) ... );
 } 
+
 
 int main()
 {
